@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Page (KMJ)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <style>
+        *{
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    }
+    html, body{
+        margin: 0;
+    }
+    .flex{
+        display: flex;
+    }
+    .title{
+        justify-content: space-between;
+    }
+    .updateDate{
+        position: relative;
+        top: 50px;
+        height: 30px;
+    }
+    .form-check{
+        margin-bottom: 15px;
+    }
+    form{
+        justify-content: space-around;
+    }
+
+    .dark-mode{
+        background-color: #000000;
+        color: #FFFFFF;
+    }
+    .page-nation{
+        margin-bottom: 30px;
+    }
+    .footer{
+        text-align: center;
+    }
+    .footer__container{
+        max-width: 45rem;
+        margin: auto;
+        color: #505050;
+        border-top: 1px solid #b6b6b6;
+        padding: 0 10px;
+    }
+    .footer__github{
+        display: block;
+        background-color: transparent;
+        margin-top: 10px;
+        font-size: 30px;
+        color: gray;
+    }
+
+    tbody{
+      text-align: center;
+    }
+    .col{
+      text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <div class="container mt-3">
+      <header class="header">
+        <div class="form-check form-switch form-check-reverse">
+          <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse" onclick="darkMode()">
+          <label class="form-check-label" for="flexSwitchCheckReverse">Light ON/OFF</label>
+        </div>
+      </header>
+      <main class="main">
+        <div class="title flex">
+          <h3 class="mt-5 mb-3">신규 등록 상품</h3>
+          <span class="updateDate"></span>
+        </div>
+        <form class="row gx-3 gy-2 align-items-center flex">
+          <div class="col-sm-3">
+            <label class="visually-hidden" for="specificSizeSelect">Preference</label> <!-- 카테고리 셀렉트 코드를 넣어주세요-->
+            <select class="form-select" id="specificSizeSelect">
+              <option selected disabled>카테고리</option>
+              <option value="1">Outer</option>
+              <option value="2">Top</option>
+              <option value="3">Bottom</option>
+              <option value="4">Accessory</option>
+            </select>
+          </div>
+          <div class="col-sm-7">
+            <label class="visually-hidden" for="specificSizeInputName">Name</label>
+            <input type="text" class="form-control" id="specificSizeInputName" placeholder="제품명을 입력해주세요">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">조회</button>
+          </div>
+        </form>
+        <div class="container mt-3">
+          <table class="table">
+            <thead class="table-light">
+              <!-- 열의 속성값을 나타내는 코드를 작성해주세요 (예 : 카테고리, 브랜드, 상품명, 가격) -->
+              <tr>
+                <th><input class="form-check-input" type="checkbox" id="chkAll" value="" aria-label="..."></th>
+                <th scope="col" class="col">상품(Item)</th>
+                <th scope="col" class="col">브랜드(Brand)</th>
+                <th scope="col" class="col">상품명(Product)</th>
+                <th scope="col" class="col">가격(Price)</th>
+              </tr>
+            </thead>
+            <tbody id="data-table">
+              <!-- 추후 크롤링한 데이터가 들어가는 자리 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="page-nation" id="pagination"> <!-- 페이지 네이션 코드를 넣어주세요 -->
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#">Previous</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer__container">
+        <a class="footer__github" href="https://github.com/BE-02-KMJ?tab=repositories"><i class="fab fa-github"></i></a>
+      </div>
+    </footer>
+
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <script>
+        function darkMode() {
+            var body = document.body;
+            body.classList.toggle("dark-mode");
+        }
+
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `업데이트 날짜: (${year}-${month}-${day})`;
+        }
+        // span 업데이트 함수
+        function updateDate() {
+        const updateDateSpan = document.querySelector('.updateDate');
+        updateDateSpan.textContent = getCurrentDate();
+        }
+        // 페이지 로드 시 실행
+        document.addEventListener('DOMContentLoaded', function () {
+        updateDate(); // 초기에 한 번 업데이트
+        });
+
+        // 크롤링한 데이터를 아래와 같은 형태의 객체 배열로 가정합니다.
+        // 추후 데이터베이스에 있는 데이터를 쿼리문으로 불러 올 수 있게 쿼리르 작성해 볼 수 있음
+        let before_parse = '{{ data_list }}'.replace(/&#34;/g, '"');
+        let data_list = JSON.parse(before_parse);
+        let dataTable = document.getElementById('data-table');
+        // document.getElementById('data-table').innerText = data_list;
+        // dataTable.innerText = data_list[0][0];
+
+        // data_list.forEach((item) => {
+        //       const row = dataTable.insertRow();
+        //       row.insertCell(0).innerHTML = `<td><input type="checkbox" name="check"></td>`;
+        //       row.insertCell(1).innerHTML = '<img src="${item[0]}>'
+        //       row.insertCell(2).innerHTML = item[1];
+        //       row.insertCell(3).innerHTML = item[2];
+        //       row.insertCell(4).innerHTML = item[3];
+        //   });
+
+        // 페이지 네이션 코드
+        const limit = 10; // 한 페이지에 표시할 아이템 수
+        let currentPage = 1; // 현재 페이지 번호
+        const totalCount = data_list.length; // 전체 아이템 수
+        const totalPage = Math.ceil(totalCount / limit); // 전체 페이지 수
+        const maxPageButtons = 5; // 최대 페이지 네이션 버튼 수
+
+        // 페이지 이동 함수
+        function goToPage(page) {
+          currentPage = page;
+
+          // 테이블 데이터 업데이트
+          dataTable.innerHTML = '';
+          for (let i = (page - 1) * limit; i < page * limit && i < totalCount; i++) {
+            const row = dataTable.insertRow();
+            row.innerHTML = `
+              <td><input type="checkbox" name="check"></td>
+              <td><img src="${data_list[i][0]}"></td>
+              <td>${data_list[i][1]}</td>
+              <td>${data_list[i][2]}</td>
+              <td>${data_list[i][3]}</td>
+            `;
+          }
+
+          // 페이지네이션 업데이트
+          let pagination = document.querySelector('.pagination');
+          pagination.innerHTML = '';
+
+          // 이전 버튼
+          if (currentPage > 1) {
+            let prevPageItem = document.createElement('li');
+            prevPageItem.className = 'page-item';
+            let prevPageLink = document.createElement('a');
+            prevPageLink.className = 'page-link';
+            prevPageLink.href = '#';
+            prevPageLink.textContent = 'Previous';
+            prevPageLink.onclick = function () {
+              goToPage(currentPage - 1);
+            };
+            prevPageItem.appendChild(prevPageLink);
+            pagination.appendChild(prevPageItem);
+          }
+
+          // 페이지 번호
+          let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+          let endPage = Math.min(totalPage, startPage + maxPageButtons - 1);
+          for (let i = startPage; i <= endPage; i++) {
+            let pageItem = document.createElement('li');
+            pageItem.className = 'page-item' + (i === currentPage ? ' active' : '');
+            let pageLink = document.createElement('a');
+            pageLink.className = 'page-link';
+            pageLink.href = '#';
+            pageLink.textContent = i;
+            pageLink.onclick = function () {
+              goToPage(i);
+            };
+            pageItem.appendChild(pageLink);
+            pagination.appendChild(pageItem);
+          }
+
+          // 다음 버튼
+          if (currentPage < totalPage) {
+            let nextPageItem = document.createElement('li');
+            nextPageItem.className = 'page-item';
+            let nextPageLink = document.createElement('a');
+            nextPageLink.className = 'page-link';
+            nextPageLink.href = '#';
+            nextPageLink.textContent = 'Next';
+            nextPageLink.onclick = function () {
+              goToPage(currentPage + 1);
+            };
+            nextPageItem.appendChild(nextPageLink);
+            pagination.appendChild(nextPageItem);
+          }
+        }
+        // 첫 페이지 로드
+        goToPage(currentPage);
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var chkAll = document.getElementById("chkAll");
+            var checkboxes = document.getElementsByName("check");
+        
+            chkAll.addEventListener("click", function() {
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = chkAll.checked;
+            });
+            });
+        
+            checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener("click", function() {
+                if (document.querySelectorAll('input[name="check"]:checked').length === checkboxes.length) {
+                chkAll.checked = true;
+                } else {
+                chkAll.checked = false;
+                }
+            });
+            });
+        });
+    </script>
+</body>
+</html>

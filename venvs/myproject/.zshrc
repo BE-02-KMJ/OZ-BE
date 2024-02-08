@@ -1,0 +1,1 @@
+alias myproject='cd /Users/minjung/Desktop/OZ-BE/venvs/myproject;source /Users/minjung/Desktop/OZ-BE/venvs/myproject/bin/activate'

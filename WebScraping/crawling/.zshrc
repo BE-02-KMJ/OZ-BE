@@ -1,0 +1,1 @@
+alias crawling='export FLASK_APP=app;export FLASK_DEBUG=true;cd /Users/minjung/Desktop/OZ-BE/WebScraping/crawling;.cd /Users/minjung/Desktop/OZ-BE/WebScraping/crawling/bin/activate'

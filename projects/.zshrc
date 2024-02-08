@@ -1,0 +1,1 @@
+alias myproject='export FLASK_APP=pybo;export FLASK_DEBUG=true;cd /Users/minjung/Desktop/OZ-BE/projects/myproject;. /Users/minjung/Desktop/OZ-BE/venvs/myproject/bin/activate'
